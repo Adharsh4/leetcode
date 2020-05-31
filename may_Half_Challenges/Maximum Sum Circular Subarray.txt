@@ -1,0 +1,29 @@
+class Solution {
+    public int maxSubarraySumCircular(int[] A) {
+        
+        int final_max = 0, curr_max = 0,invertedSum = 0, count = 0,zeroCount = 0;
+        int original_max = findMax(A);
+        for(int i=0;i<A.length;i++){
+            invertedSum += A[i];
+            A[i] = -A[i];
+        }
+        int original_min = findMax(A);
+        final_max = invertedSum + original_min;
+        if(final_max == 0){
+            return original_max;
+        }
+        return Math.max(original_max, final_max);
+    }
+    
+    public int findMax(int[] array){
+        
+        int curr_max = array[0];
+        int final_max = array[0];
+        for(int i=1;i<array.length;i++){
+            curr_max = Math.max(array[i], curr_max+array[i]);       
+            final_max = Math.max(final_max, curr_max); 
+        }
+        return final_max;
+    }
+       
+}
