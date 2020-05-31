@@ -1,0 +1,32 @@
+class Solution {
+        public String frequencySort(String s) {
+            
+            int[] charCount = new int[127];
+            Param[] array = new Param[127];
+            for(int i=0;i<s.length();i++){
+                charCount[s.charAt(i)]++;
+            }
+            for(int i=0;i<127;i++){
+                array[i] = new Param(charCount[i], (char)i);
+            }
+            Arrays.sort(array, (o1, o2) -> o2.count - o1.count);
+            StringBuilder finalAns = new StringBuilder();
+            for(int i=0;i<127;i++){
+                for(int j=0;j<array[i].count;j++){
+                    finalAns.append(array[i].c);
+                }
+            }
+            return String.valueOf(finalAns);
+            
+        }
+}
+
+class Param{
+    
+    char c;
+    int count;
+    Param(int count, char c){
+        this.c = c;
+        this.count = count;
+    }
+}
