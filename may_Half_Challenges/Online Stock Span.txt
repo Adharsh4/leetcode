@@ -1,0 +1,38 @@
+class StockSpanner {
+
+    private List<Integer> list;
+    private List<Integer>countArray;
+    
+    public StockSpanner() {
+        
+        list = new ArrayList<Integer>();
+        countArray = new ArrayList<Integer>();
+        
+    }
+    
+    public int next(int price) {
+        
+        int j = 0, count = 1;
+        if(list.size() == 0 || price < list.get(list.size() - 1)){
+            list.add(price);
+            countArray.add(1);
+            return 1;
+        }else{
+            count = 1;
+            j = list.size()-1;
+            while(j >= 0 && list.get(j) <= price){
+                j = j - countArray.get(j);
+            }
+            countArray.add(list.size() - j);
+            list.add(price);
+        }
+        return countArray.get(list.size()-1);
+        
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
