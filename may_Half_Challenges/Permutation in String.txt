@@ -1,0 +1,43 @@
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        
+        if(s2.length() < s1.length() || s2.equals("")){
+            return false;
+        }
+        if(s1.equals("")){
+            return true;
+        }
+        int[] countArray = new int[27];
+        boolean toBeReturned = true;
+        for(int i=0;i<s1.length();i++){
+            countArray[s1.charAt(i) - 'a']++;
+            countArray[s2.charAt(i) - 'a']--;
+        }
+        for(int i=0;i<countArray.length;i++){
+            if(countArray[i] != 0){
+                toBeReturned = false;
+                break;
+            }
+        }
+        if(toBeReturned){
+            return true;
+        }
+        toBeReturned = true;
+        for(int i=s1.length();i<s2.length();i++){
+            countArray[s2.charAt(i) - 'a']--;
+            countArray[s2.charAt(i-s1.length()) - 'a']++;
+            for(int j=0;j<countArray.length;j++){
+                if(countArray[j] != 0){
+                    toBeReturned = false;
+                    break;
+                }
+            }
+            if(toBeReturned == true){
+                return true;
+            }
+            toBeReturned = true;
+        }
+        return false;
+        
+    }
+}
