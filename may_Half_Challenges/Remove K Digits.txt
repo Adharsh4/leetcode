@@ -1,0 +1,25 @@
+class Solution {
+    public String removeKdigits(String num, int k) {
+        
+        if(num.length() == k){
+            return "0";
+        }
+        StringBuilder finalAns = new StringBuilder(num);
+        for(int i=0;i<k;i++){
+            int j = 0;
+            while(j < finalAns.length()-1 && finalAns.charAt(j) <= finalAns.charAt(j+1)){
+                j++;
+            }
+            finalAns.delete(j, j+1);
+        }
+        while(finalAns.length() > 1 && finalAns.charAt(0) == '0'){
+            finalAns.delete(0, 1);
+        }
+        if(finalAns.length() == 0){
+            return "0";
+        }
+        return String.valueOf(finalAns);
+        // return String.valueOf(Integer.parseInt(String.valueOf((finalAns))));
+        
+    }
+}
