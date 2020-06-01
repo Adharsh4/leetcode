@@ -1,0 +1,30 @@
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        
+        int[] inDegree = new int[numCourses];
+        for(int i=0; i<prerequisites.length; i++){
+            inDegree[prerequisites[i][0]]++;
+        }
+        Stack<Integer> stack = new Stack<Integer>();
+        for(int i=0; i<inDegree.length; i++){
+            if(inDegree[i] == 0){
+                stack.push(i);
+            }
+        }
+        int count = 0;
+        while(!stack.isEmpty()){
+            int current = stack.pop();
+            count++;
+            for(int i=0; i<prerequisites.length; i++){
+                if(current == prerequisites[i][1]){
+                    inDegree[prerequisites[i][0]]--;
+                    if(inDegree[prerequisites[i][0]] == 0){
+                        stack.push(prerequisites[i][0]);
+                    }
+                }
+            }
+        }
+        return count == numCourses;
+        
+    }
+}
