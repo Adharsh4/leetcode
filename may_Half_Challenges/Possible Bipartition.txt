@@ -1,0 +1,52 @@
+class Solution {
+    public boolean possibleBipartition(int N, int[][] dislikes) {
+        
+        if(dislikes.length == 0){
+            return true;
+        }
+        ArrayList<Integer>[] list = new ArrayList[N+1];
+        for(int i=1;i<=N;i++){
+            list[i] = new ArrayList<Integer>();
+        }
+        for(int i=0; i<dislikes.length; i++){
+            list[dislikes[i][0]].add(dislikes[i][1]);
+            list[dislikes[i][1]].add(dislikes[i][0]);
+        }
+        int[] colorArray = new int[N+1];
+        Arrays.fill(colorArray, 1, N+1, -1);
+        for(int i=1;i<=N;i++){
+            if(colorArray[i] == -1){
+                if(!isBipartite(list, N, i, colorArray)){
+                    return false;
+                }
+            }
+        }
+        return true;
+        
+    }
+    
+    public boolean isBipartite(ArrayList<Integer>[] list, int N, int i, int[] colorArray){
+        
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(i);
+        colorArray[i] = 1;
+        
+        while(!queue.isEmpty()){
+            int current = queue.remove();
+            List<Integer> temp = list[current];
+            if(temp != null){
+                for(int k=0;k<temp.size();k++){
+                    if(colorArray[current] == colorArray[temp.get(k)]){
+                        return false;
+                    }
+                    if(colorArray[temp.get(k)] == -1){
+                        colorArray[temp.get(k)] = 1 - colorArray[current];
+                        queue.add(temp.get(k));
+                    }
+                }
+            }
+        }
+        return true;
+        
+    }
+}
