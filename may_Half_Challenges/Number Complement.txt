@@ -1,0 +1,26 @@
+class Solution {
+    public int findComplement(int num) {
+        
+        String binary = "";
+        int finalAns = 0;
+        int count = 0;
+        if(num == 1){
+            return 0;
+        }
+        while(num > 0){
+            binary += (num%2);
+            num /= 2;
+        }
+        for(int i=binary.length()-1;i>=0;i--){
+            if(binary.charAt(i) == '0'){
+                finalAns += ((int)(Math.pow((double)2,(double)i)));
+                count++;
+            }
+        }
+        if(count == 0){
+            return 0;
+        }
+        return finalAns;
+        
+    }
+}
