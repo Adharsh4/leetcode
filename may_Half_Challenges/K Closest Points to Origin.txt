@@ -1,0 +1,48 @@
+class Solution {
+    public int[][] kClosest(int[][] points, int k) {
+        
+        int[][] finalAns = new int[k][2];
+        Param[] paramArr = new Param[points.length];
+        int distance = 0;
+        // We can do by taking square root if we follow the formula or you can do it without taking square root also.
+        for(int i=0; i<points.length; i++){
+            //double distance = Math.sqrt((points[i][0] * points[i][0]) + (points[i][1] * points[i][1]));
+            distance = (points[i][0] * points[i][0]) + (points[i][1] * points[i][1]);
+            paramArr[i] = new Param(i, distance);
+        }
+        //Arrays.sort(paramArr, new sortByDistance());
+        Arrays.sort(paramArr, (p1, p2) -> p1.distance - p2.distance);
+        for(int i=0; i<k; i++){
+            finalAns[i][0] = points[paramArr[i].index][0];
+            finalAns[i][1] = points[paramArr[i].index][1];
+        }
+        return finalAns;
+        
+    }
+}
+
+class Param{
+    
+    int index;
+    int distance;
+    Param(int index, int distance){
+        this.index = index;
+        this.distance = distance;
+    }
+    
+}
+
+// class sortByDistance implements Comparator<Param>{
+    
+//     @Override
+//     public int compare(Param p1, Param p2){
+//         if(p1.distance < p2.distance){
+//             return -1;
+//         }
+//         if(p1.distance > p2.distance){
+//             return 1;
+//         }
+//         return 0;
+//     }
+    
+// }
